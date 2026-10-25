@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ANP 274 – Animal Production CBT Practice</title>
+<style>
+:root{--bg:#f3f5f9;--card:#fff;--tx:#1b2430;--mu:#5b6675;--pr:#0b5d3b;--bd:#d5dbe4;--ok:#1a7f4b;--no:#c0392b}
+@media (prefers-color-scheme:dark){:root{--bg:#10151c;--card:#1a212b;--tx:#e8edf3;--mu:#98a3b3;--pr:#34b27b;--bd:#2d3744;--ok:#4cc38a;--no:#ef6f61}}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,Arial,sans-serif;background:var(--bg);color:var(--tx);line-height:1.45}
+.w{max-width:760px;margin:0 auto;padding:14px}
+.c{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:16px;margin-bottom:12px}
+h1{font-size:1.25rem;margin:0 0 4px}h2{font-size:1.05rem;margin:0 0 10px}
+.mu{color:var(--mu);font-size:.9rem}
+input{width:100%;padding:11px;margin:6px 0 12px;border:1px solid var(--bd);border-radius:8px;font-size:1rem;background:var(--bg);color:var(--tx)}
+button{font:inherit;cursor:pointer}
+.b{background:var(--pr);color:#fff;border:0;border-radius:8px;padding:11px 18px}
+.b.g{background:transparent;color:var(--tx);border:1px solid var(--bd)}
+.b:disabled{opacity:.4}
+.top{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;font-size:.9rem}
+.t{font-weight:700;color:var(--pr)}
+.o{display:flex;gap:10px;width:100%;text-align:left;background:var(--bg);color:var(--tx);border:1px solid var(--bd);border-radius:8px;padding:11px;margin:8px 0}
+.o.s{border-color:var(--pr);background:color-mix(in srgb,var(--pr) 15%,transparent)}
+.o b{min-width:22px}
+.row{display:flex;justify-content:space-between;gap:8px;margin-top:10px}
+.g70{display:grid;grid-template-columns:repeat(auto-fill,minmax(38px,1fr));gap:6px}
+.g70 button{padding:7px 0;border:1px solid var(--bd);border-radius:6px;background:var(--bg);color:var(--tx)}
+.g70 .a{background:var(--pr);color:#fff;border-color:var(--pr)}
+.g70 .u{outline:2px solid var(--tx)}
+.sc{font-size:2rem;font-weight:800;color:var(--pr)}
+.r{border-left:4px solid var(--bd);padding:8px 12px;margin:10px 0;background:var(--bg);border-radius:6px}
+.r.ok{border-color:var(--ok)}.r.no{border-color:var(--no)}
+.ok-t{color:var(--ok);font-weight:600}.no-t{color:var(--no);font-weight:600}
+.sticky{position:sticky;top:0;z-index:5}
+</style>
+</head>
+<body>
+<div class="w" id="app"></div>
+<script>
+const MINUTES=25;
+const Q=[
+["Human civilization was made possible by",["Invention of writing","Domestication of animals and plants","Industrial machines","Long-distance trade"],1],
+["The earliest evidence of a domesticated animal is for the",["Cattle","Goat","Dog","Sheep"],2],
+["The dog was domesticated about how many years ago?",["5,000","9,000","11,000","14,000"],3],
+["Which of these is a food product from animals?",["Wool","Milk","Hides","Manure"],1],
+["Which of these is a non-food by-product of animals?",["Meat","Egg","Hides","Cheese"],2],
+["The art and science of culturing animals for man’s use is",["Acclimatization","Taming","Domestication","Selection"],2],
+["Acceptance of new feed and familiarization with a new environment is called",["Trapping","Culling","Hybridization","Acclimatization"],3],
+["Taming implies",["Instilling obedience and cooperation","Capturing a young animal","Culling poor animals","Hybridizing wild species"],0],
+["The animal’s desire to escape is finally lost through",["Trapping","Hunting","Selection and breeding","Migration"],2],
+["Animals that lack adaptability and tolerance of human presence are",["Preserved","Worshipped","Culled","Used for breeding"],2],
+["A group of animals capable of interbreeding is called a",["Herd","Breed","Pack","Clan"],1],
+["An immediate consequence of domestication is",["Increase in body size","Decrease in body size","Loss of coat colour varieties","Increase in desire to escape"],1],
+["Accumulation of coat colour varieties is especially seen in the domestic",["Guinea fowl","Turkey","Chicken","Goose"],2],
+["Changes in mouth parts associated with nutrition are seen mostly in",["Birds","Mammals","Reptiles","Fish"],1],
+["The ability to forage favoured domestication of",["Carnivores","Seed and grass eaters","Fish eaters","Scavengers"],1],
+["The ability to imprint was very important in",["Initiating taming","Culling","Slaughter","Hybridization"],0],
+["Turkeys were first introduced into Europe in",["1523–1524 AD","1585 AD","1000 AD","1700 AD"],0],
+["Guinea fowl was reintroduced into Europe in the 15th century by",["The Romans","Portuguese explorers","The English","The Spanish"],1],
+["Cattle belong to the family",["Suidae","Bovidae","Caprinae","Bubalina"],1],
+["The genus of cattle is",["Bubalus","Capra","Ovis","Bos"],3],
+["Cattle belong to the order",["Suiformes","Artiodactyla","Chordata","Mammalia"],1],
+["Which is NOT a domesticated species of cattle?",["B. taurus","B. indicus","B. primigenius","B. brachycerous"],2],
+["Domestic cattle descended from the wild cattle known as",["Aurochs","Bezoar","Muflon","Red jungle fowl"],0],
+["B. taurus is found mainly in the",["Tropics","Temperate regions","Deserts","Rain forest only"],1],
+["Humped cattle belong to the species",["B. taurus","B. indicus","B. brachycerous","Aurochs"],1],
+["Which is an example of B. brachycerous?",["Murrah","Jafarabadi","Muturu","Nili-Ravi"],2],
+["Cattle are sacred to the",["Hindus of India","Eskimos","Aborigines","Vikings"],0],
+["Cattle owners like the Fulani eat their cattle only as",["Gifts","Culls","Sacrifices","Calves"],1],
+["In Spain, bulls are specially bred for",["Milk","Ritual sacrifice and bull fighting","Draught","Racing"],1],
+["Flower-bedecked cattle at ceremonial occasions and shows are found in",["Spain","India","Switzerland","Nigeria"],2],
+["Of the 194 species in the order Artiodactyla, how many are found in Africa?",["92","194","54","102"],0],
+["The genus of buffalo is",["Bos","Bubalus","Capra","Sus"],1],
+["Buffalo belong to the group",["Bovina","Caprinae","Bubalina","Suiformes"],2],
+["Which buffalo is black with white markings on the face, tail and extremities?",["Nili-Ravi","Thai","Murrah","Jafarabadi"],2],
+["Which buffalo is found in northern and southern Thailand?",["Thai","Murrah","Jafarabadi","Nili-Ravi"],0],
+["Which buffalo has an elongated head, bulging at the top and depressed between the eyes?",["Murrah","Thai","Nili-Ravi","Jafarabadi"],2],
+["Goats belong to the subfamily",["Bovinae","Caprinae","Suinae","Bubalina"],1],
+["The Bezoar goat is",["C. aegagrus ibex","C. aegagrus falconeri","C. aegagrus aegagrus","Capra hircus"],2],
+["The Markhor goat is",["C. aegagrus aegagrus","C. aegagrus falconeri","C. aegagrus ibex","Ovis ammon"],1],
+["The wool-bearing goats of the Himalayas came from a cross between",["Bezoar and Markhor","Ibex and Markhor","Bezoar and Ibex","Muflon and Urial"],0],
+["The main ancestor of domestic goats is the",["Ibex","Markhor","Bezoar goat","Aurochs"],2],
+["Goats were domesticated about how many years ago?",["14,000","9,000","3,000","1,000"],1],
+["All domesticated sheep belong to the species",["O. aries","O. musimon","O. orientalis","O. ammon"],0],
+["Sheep are believed to have been first domesticated in",["Western Asia","South America","Central Africa","Europe"],0],
+["The muflon sheep is",["Ovis orientalis","Ovis ammon","Ovis musimon","Ovis canadensis"],2],
+["The urial sheep is",["Ovis ammon","Ovis orientalis","Ovis musimon","Ovis canadensis"],1],
+["The argali sheep (Ovis ammon) is found in",["Central Asia","Europe","Afghanistan","North America"],0],
+["The bighorn sheep (Ovis canadensis) is found in",["Europe","Africa","North Asia and North America","Afghanistan"],2],
+["The wild sheep considered the sole ancestor of domestic sheep is the",["Urial","Argali","Muflon","Bighorn"],2],
+["The earliest evidence of domesticated sheep (about 11,000 years ago) was found at",["Zawi Chemi Shanidar, North East Iraq","The Nile Valley, Egypt","The Peruvian Andes","Sulawesi"],0],
+["The Barbary sheep of Africa",["Contributed to present breeds","Was never domesticated","Was domesticated 7,000 years ago","Is the ancestor of Djallonke"],1],
+["How many major breeds of domesticated sheep are in Africa?",["2","3","4","5"],2],
+["Which sheep were the first to be introduced into Africa about 7,000 years ago?",["Fat-tailed coarse wool","Fat-rumped","Thin-tailed","Merino"],2],
+["Which is a semi-arid savanna thin-tailed hairy sheep in Nigeria?",["West African Dwarf","Djallonke","Fulani","Muflon"],2],
+["European, Western Asian and North African geese were derived from the",["Swan goose","Greylag (Anser anser)","Canadian goose","Mallard"],1],
+["The genus of pigs is",["Sus","Suidae","Bos","Capra"],0],
+["Pigs belong to the family",["Bovidae","Suidae","Caprinae","Suiformes"],1],
+["Indigenous African pigs and the black pigs of Europe are believed to derive from",["S. vittatus","S. scrofa","S. barbatus","S. verrucosus"],1],
+["The white pigs of Asia and China are believed to have developed from",["S. scrofa","S. vittatus","S. salvanius","S. celebensis"],1],
+["Which large pig (about 150 kg, red or black coat) has not been domesticated?",["S. barbatus","S. celebensis","S. verrucosus","S. salvanius"],0],
+["The Sulawesi warty pig is",["S. celebensis","S. verrucosus","S. barbatus","S. salvanius"],0],
+["The Javan warty pig (about 120 kg) is",["S. salvanius","S. celebensis","S. verrucosus","S. barbatus"],2],
+["The very small pig (about 10 kg) found in North East India is",["S. celebensis","S. salvanius","S. barbatus","S. scrofa"],1],
+["Guinea fowl is indigenous to",["Asia","Africa","Europe","South America"],1],
+["The domestic turkey originated from the American wild turkey, probably in",["Mexico","Europe","Asia","Africa"],0],
+["The Red jungle fowl is",["Gallus varius","Gallus sonnerati","Gallus gallus","Gallus lafayette"],2],
+["The Green (Javan) jungle fowl is",["Gallus gallus","Gallus varius","Gallus sonnerati","Gallus lafayette"],1],
+["The Grey jungle fowl, found in southern India, is",["Gallus lafayette","Gallus varius","Gallus gallus","Gallus sonnerati"],3],
+["The Lafayette jungle fowl is found in",["Java","Sri Lanka","Southern India","Southern China"],1],
+["Authorities who believe all four wild species contributed to the domestic fowl call it",["Gallus gallus","Gallus domesticus","Gallus varius","Gallus lafayette"],1],
+["Most duck breeds are believed to have come from the",["Muscovy","Green-headed mallard","Swan goose","Greylag"],1],
+["The Muscovy duck is derived from the",["Mallard","Tropical American tree duck","Swan goose","Greylag"],1]
+];
+const L="ABCDE",app=document.getElementById("app");
+let me={},cur=0,ans=Array(Q.length).fill(null),left=MINUTES*60,tm=null,done=false;
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+function start(){
+ app.innerHTML=`<div class="c"><h1>ANP 274 – Animal Production</h1><div class="mu">CBT practice · ${Q.length} questions · ${MINUTES} minutes</div></div>
+ <div class="c"><h2>Candidate details</h2>
+ <label>Full name<input id="nm" placeholder="e.g. Anyim Samuel Toochukwu" autocomplete="name"></label>
+ <label>Reg number<input id="rg" placeholder="e.g. 2022/248410" inputmode="text"></label>
+ <button class="b" id="go">Start test</button><p class="mu" id="er"></p>
+ <p class="mu">Pick one option per question. Your answers and the correct answers for all ${Q.length} questions show after you submit.</p></div>`;
+ document.getElementById("go").onclick=()=>{
+  const n=nm.value.trim(),r=rg.value.trim();
+  if(!n||!r){er.textContent="Enter your name and reg number to continue.";return}
+  me={n,r};tm=setInterval(tick,1000);draw();
+ };
+}
+function fmt(s){return String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0")}
+function tick(){left--;const e=document.getElementById("tt");if(e)e.textContent=fmt(left);if(left<=0)finish()}
+function cnt(){const e=document.getElementById("cnt");if(e)e.textContent="Answered: "+ans.filter(x=>x!==null).length+"/"+Q.length}
+function draw(){
+ app.innerHTML=`<div class="c top sticky"><div><b>${esc(me.n)}</b><br><span class="mu">${esc(me.r)}</span></div><div style="text-align:right"><div class="t">Time: <span id="tt">${fmt(left)}</span></div><span class="mu" id="cnt"></span></div></div>`
+ +Q.map((q,i)=>`<div class="c"><div class="mu">Question ${i+1} of ${Q.length}</div><h2 style="margin-top:6px">${esc(q[0])}</h2>${q[1].map((o,j)=>`<button class="o ${ans[i]===j?"s":""}" data-q="${i}" data-i="${j}"><b>${L[j]}.</b><span>${esc(o)}</span></button>`).join("")}</div>`).join("")
+ +`<div class="c"><button class="b" id="sb2" style="width:100%">Submit test</button></div>`;
+ app.querySelectorAll(".o").forEach(b=>b.onclick=()=>{
+  const i=+b.dataset.q;ans[i]=+b.dataset.i;
+  app.querySelectorAll('.o[data-q="'+i+'"]').forEach(x=>x.classList.toggle("s",x===b));cnt();
+ });
+ document.getElementById("sb2").onclick=ask;cnt();
+}
+function ask(){finish()}
+function finish(){
+ if(done)return;done=true;clearInterval(tm);
+ const sc=Q.reduce((a,q,i)=>a+(ans[i]===q[2]?1:0),0),pc=Math.round(sc/Q.length*100);
+ app.innerHTML=`<div class="c"><h1>Test result</h1><div><b>${esc(me.n)}</b> · ${esc(me.r)}</div>
+ <div class="sc">${sc} / ${Q.length} (${pc}%)</div>
+ <div class="mu">Correct: ${sc} · Wrong: ${ans.filter((x,i)=>x!==null&&x!==Q[i][2]).length} · Skipped: ${ans.filter(x=>x===null).length}</div>
+ <div class="row"><button class="b" onclick="location.reload()">Retake</button><button class="b g" onclick="window.print()">Print / Save PDF</button></div></div>
+ <div class="c"><h2>All answers</h2>${Q.map((q,i)=>{
+  const ok=ans[i]===q[2],a=ans[i];
+  return `<div class="r ${ok?"ok":"no"}"><b>${i+1}. ${esc(q[0])}</b><br>
+  Your answer: <span class="${ok?"ok-t":"no-t"}">${a===null?"Not answered":L[a]+". "+esc(q[1][a])}</span><br>
+  Correct answer: <span class="ok-t">${L[q[2]]}. ${esc(q[1][q[2]])}</span></div>`}).join("")}</div>`;
+ window.scrollTo(0,0);
+}
+start();
+</script>
+</body>
+</html>
